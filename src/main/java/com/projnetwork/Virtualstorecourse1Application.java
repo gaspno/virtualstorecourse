@@ -7,10 +7,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.projnetwork.entities.Address;
 import com.projnetwork.entities.Category;
+import com.projnetwork.entities.City;
+import com.projnetwork.entities.Client;
 import com.projnetwork.entities.Product;
+import com.projnetwork.entities.Province;
+import com.projnetwork.entities.enums.TypeClient;
+import com.projnetwork.repositories.AddressRepository;
 import com.projnetwork.repositories.CategoryRepository;
+import com.projnetwork.repositories.CityRepository;
+import com.projnetwork.repositories.ClientRepository;
 import com.projnetwork.repositories.ProductRepository;
+import com.projnetwork.repositories.ProvinceRepository;
 
 
 
@@ -22,6 +31,14 @@ public class Virtualstorecourse1Application implements CommandLineRunner{
 	private CategoryRepository repoAuxCategory;
 	@Autowired
 	private ProductRepository repoAuxProduct;
+	@Autowired
+	private CityRepository repoAuxCity;
+	@Autowired
+	private ProvinceRepository repoAuxProvince;
+	@Autowired
+	private ClientRepository repoAuxClient;
+	@Autowired
+	private AddressRepository repoAuxAddress;
 	
 
 	public static void main(String[] args) {
@@ -61,6 +78,33 @@ public class Virtualstorecourse1Application implements CommandLineRunner{
 		p8.getCategories().add(c1);
 				
 		repoAuxProduct.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8));
+		
+		Province pro1=new Province(null,"Ghuozou");
+		Province pro2=new Province(null, "Zitzang");
+		Province pro3=new Province(null, "york new");
+		
+		repoAuxProvince.saveAll(Arrays.asList(pro1,pro2,pro3));
+				
+		City cit1=new City(null, "choniang", pro1);
+		City cit2=new City(null, "xanghey", pro2);
+		City cit3=new City(null, "xintsu", pro1);
+		City cit4=new City(null, "york new city", pro3);
+		
+		repoAuxCity.saveAll(Arrays.asList(cit1,cit2,cit3,cit4));
+		
+		
+		
+		Client cli1=new Client(null, "rosana@tmail.com","Rosana Oliveira Fernandes de Augustus","51274964255" ,TypeClient.PESSOAFISICA);	
+		
+		cli1.getPhones_numbers().addAll(Arrays.asList("55 14 714515588","55 13 381461455"));
+		
+		Address addr1=new Address(null, "81", "apartment", "new broklins", "51240130","Avenue new passdela",cli1, cit4);
+		Address addr2=new Address(null, "1214", "house","Xanghey zone 1124", "81401021","Xanghey zone 1124 Avenue 5", cli1, cit3);
+		
+		cli1.getAdresses().addAll(Arrays.asList(addr1,addr2));
+		repoAuxClient.save(cli1);
+		repoAuxAddress.saveAll(Arrays.asList(addr1,addr2));
+		
 		
 		
 	}
