@@ -1,5 +1,6 @@
 package com.projnetwork;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,22 @@ import com.projnetwork.entities.Address;
 import com.projnetwork.entities.Category;
 import com.projnetwork.entities.City;
 import com.projnetwork.entities.Client;
+import com.projnetwork.entities.ItemOrder;
+import com.projnetwork.entities.Order;
+import com.projnetwork.entities.Payment;
+import com.projnetwork.entities.PaymentBoleto;
+import com.projnetwork.entities.PaymentCreditCard;
 import com.projnetwork.entities.Product;
 import com.projnetwork.entities.Province;
+import com.projnetwork.entities.enums.PaymentStatus;
 import com.projnetwork.entities.enums.TypeClient;
 import com.projnetwork.repositories.AddressRepository;
 import com.projnetwork.repositories.CategoryRepository;
 import com.projnetwork.repositories.CityRepository;
 import com.projnetwork.repositories.ClientRepository;
+import com.projnetwork.repositories.ItemOrderRepository;
+import com.projnetwork.repositories.OrderRepository;
+import com.projnetwork.repositories.PaymentRepository;
 import com.projnetwork.repositories.ProductRepository;
 import com.projnetwork.repositories.ProvinceRepository;
 
@@ -39,6 +49,12 @@ public class Virtualstorecourse1Application implements CommandLineRunner{
 	private ClientRepository repoAuxClient;
 	@Autowired
 	private AddressRepository repoAuxAddress;
+	@Autowired
+	private PaymentRepository repoAuxPayment;
+	@Autowired
+	private OrderRepository repoAuxOrder;
+	@Autowired
+	private ItemOrderRepository repoAuxItemOrder;
 	
 
 	public static void main(String[] args) {
@@ -49,6 +65,9 @@ public class Virtualstorecourse1Application implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
+		
+		SimpleDateFormat sdfm=new SimpleDateFormat("dd/MM/yyyy hh:mm");	
+		
 		Category c1=new Category(null,"informatica");
 		Category c2=new Category(null,"software");
 		Category c3=new Category(null,"bebidas");
@@ -105,6 +124,32 @@ public class Virtualstorecourse1Application implements CommandLineRunner{
 		repoAuxClient.save(cli1);
 		repoAuxAddress.saveAll(Arrays.asList(addr1,addr2));
 		
+		Order ped1=new Order(null,sdfm.parse("30/09/2017 10:32"),addr1, cli1);
+		Order ped2=new Order(null,sdfm.parse("30/09/2017 10:32"),addr2, cli1);			
+		
+		Payment pay1=new PaymentCreditCard(null, PaymentStatus.SETTLED, ped1, 6);
+		ped1.setPayment(pay1);
+		Payment pay2=new PaymentBoleto(null, PaymentStatus.PENDENT, ped2, sdfm.parse("27/10/2017 00:00"), sdfm.parse("20/10/2017 00:00"));
+		ped2.setPayment(pay2);
+
+		repoAuxOrder.saveAll(Arrays.asList(ped1,ped2));			
+		repoAuxPayment.saveAll(Arrays.asList(pay1,pay2));
+		cli1.getOrders().addAll(Arrays.asList(ped1,ped2));
+		repoAuxClient.save(cli1);
+		
+		ItemOrder ito1=new ItemOrder(ped1, p1, 1,2000.00,0.00);
+		ItemOrder ito2=new ItemOrder(ped1, p3, 2,500.00,20.00);
+		ItemOrder ito3=new ItemOrder(ped2, p4, 4,1.200,0.00);
+		ItemOrder ito4=new ItemOrder(ped2, p5, 1,222.00,00.00);
+		ItemOrder ito5=new ItemOrder(ped2, p6, 2,100.05,4.15);
+		ItemOrder ito6=new ItemOrder(ped2, p7, 3,150.00,2.00);
+		
+	
+		
+		ped1.getItens().addAll(Arrays.asList(ito1,ito2));
+		ped2.getItens().addAll(Arrays.asList(ito3,ito4,ito5,ito6));
+		
+		repoAuxItemOrder.saveAll(Arrays.asList(ito1,ito2,ito3,ito4,ito5,ito6));
 		
 		
 	}

@@ -2,7 +2,9 @@ package com.projnetwork.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,7 +36,10 @@ public class Product implements Serializable{
 	@JoinColumn(name ="product_id" ),
 	inverseJoinColumns = @JoinColumn(name = "categoria_id") )
 	private List<Category> categories=new ArrayList<>();
+	@OneToMany(mappedBy = "id.product")
+	private Set<ItemOrder> itens=new HashSet<>(); 
 	
+
 	public Product() {
 		
 	}
@@ -43,6 +49,14 @@ public class Product implements Serializable{
 		Id = id;
 		this.name = name;
 		this.price = price;	
+	}
+	@JsonIgnore	
+	public List<Order> getOrders() {
+		List<Order> orders=new ArrayList<>();
+		for(ItemOrder x:itens) {
+			orders.add(x.getOrder());
+		}
+		return orders;
 	}
 
 	public Integer getId() {
@@ -71,6 +85,10 @@ public class Product implements Serializable{
 	@JsonIgnore
 	public List<Category> getCategories() {
 		return categories;
+	}
+	@JsonIgnore
+	public Set<ItemOrder> getItens() {
+		return itens;
 	}
 	
 
