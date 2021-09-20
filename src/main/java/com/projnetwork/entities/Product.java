@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,12 +15,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.TableGenerator;
+import javax.persistence.Table;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@TableGenerator(name = "produto")
+@Table(name = "produto")
 public class Product implements Serializable{
 	
 	/**
@@ -29,7 +31,9 @@ public class Product implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
+	@Column(name = "nome_produto")
 	private String name;
+	@Column(name = "preço")
 	private Double price;
 	@ManyToMany
 	@JoinTable(name = "produto_categoria", joinColumns =

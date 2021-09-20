@@ -2,6 +2,8 @@ package com.projnetwork.entities;
 
 import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +26,7 @@ public class Province implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
+	@Column(name = "nome")
 	private String name;
 	@OneToMany(mappedBy = "province")
 	private List<City> cities;

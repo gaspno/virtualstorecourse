@@ -2,6 +2,7 @@ package com.projnetwork.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -14,7 +15,9 @@ public class PaymentBoleto extends Payment{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Column(name = "date_de_expiração")
 	private Date dateExpired;
+	@Column(name = "numero_de_emissão")
 	private Date dateEmited;
 	
 	public PaymentBoleto() {

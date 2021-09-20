@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,13 +31,17 @@ public class Client implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String email;
+	@Column(name = "nome")
 	private String name;
+	@Column(name = "numero_de_identificaçao")
 	private String identification_id;
+	@Column(name = "tipo")
 	private Integer type;
 	@OneToMany(mappedBy = "client")
 	private List<Address> adresses=new ArrayList<>();
 	@ElementCollection
-	@CollectionTable(name = "phone")
+	@CollectionTable(name = "telefone")
+	@Column(name = "numero")
 	private Set<String> phones_numbers=new HashSet<>();
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders=new ArrayList<>(); 

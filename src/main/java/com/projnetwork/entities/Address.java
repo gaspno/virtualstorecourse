@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,10 +27,15 @@ public class Address implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name = "numero")
 	private String number;
+	@Column(name = "complemento")
 	private String complementinfo;
+	@Column(name = "bairro")
 	private String district;
+	@Column(name = "codigo_postal")
 	private String zip_code;
+	@Column(name = "logradouro")
 	private String public_place;
 	@ManyToOne
 	@JoinColumn(name = "client_id")

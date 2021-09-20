@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-@Table(name = "orders")
+@Table(name = "pedido")
 public class Order implements Serializable{
 	
 	/**
@@ -34,8 +35,8 @@ public class Order implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name = "data")
 	private Date instant;	
-	
 	@OneToOne(cascade = CascadeType.ALL,mappedBy = "order")
 	private Payment payment;
 	@ManyToOne

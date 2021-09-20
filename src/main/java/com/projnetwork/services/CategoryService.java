@@ -24,5 +24,10 @@ public class CategoryService {
 		Optional<Category> category= repositoryCategory.findById(id);
 		return category.orElseThrow(()->new ObjectNotFoundException("Categoria não encontrada"));
 	}
+	public Category insert(Category obj) {
+		
+		obj.setId(null);	
+		return repositoryCategory.save(obj);
+	}
 
 }
