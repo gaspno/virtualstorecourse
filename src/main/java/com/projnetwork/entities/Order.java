@@ -59,6 +59,14 @@ public class Order implements Serializable{
 		this.address = address;
 		this.client = client;
 	}
+	public double getTotal() {
+		double t=0;
+		for(ItemOrder v:getItens()) {
+			t+=v.getSubTotal();
+		}
+		return t;
+	}
+	
 	@JsonIgnore
 	public List<Product> getProducts() {
 		List<Product> products=new ArrayList<>();

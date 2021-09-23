@@ -71,20 +71,35 @@ public class Virtualstorecourse1Application implements CommandLineRunner{
 		Category c1=new Category(null,"informatica");
 		Category c2=new Category(null,"software");
 		Category c3=new Category(null,"bebidas");
+		Category c4=new Category(null,"acessórios");
+		Category c5=new Category(null,"jogos");
+		Category c6=new Category(null,"eletrodomesticos");
+		Category c7=new Category(null,"moveis");
+		Category c8=new Category(null,"cama e banho");
+		Category c9=new Category(null,"lazer");
+		Category c10=new Category(null,"alimentos");
+		
 		Product p1=new Product(null,"computador",2000.00);
 		Product p2=new Product(null, "impressora", 800.00);
 		Product p3=new Product(null, "mouse", 80.00);
 		Product p4=new Product(null, "teclado", 120.00);
 		Product p5=new Product(null,"placa de video", 1550.00);
 		Product p6=new Product(null,"vodka", 105.00);		
-		Product p7=new Product(null,"vinnho", 200.00);
+		Product p7=new Product(null,"vinnho", 200.00);	
 		Product p8=new Product(null,"software de edição de imagens um ano licença", 4550.00);
+		Product p12=new Product(null,"toalha", 15.00);
+		Product p9=new Product(null,"sabonete",0.50);
+		Product p10=new Product(null,"arroz", 2.00);
+		Product p11=new Product(null,"vitamica c", 20.00);
 		
-	/*	c1.getProducts().addAll(Arrays.asList(p1,p2,p3,p4,p5,p8));
+		c1.getProducts().addAll(Arrays.asList(p1,p2,p3,p4,p5,p8));
 		c2.getProducts().addAll(Arrays.asList(p8));
-		c3.getProducts().addAll(Arrays.asList(p6,p7));*/
+		c3.getProducts().addAll(Arrays.asList(p6,p7));
+		c2.getProducts().addAll(Arrays.asList(p9,p12));
+		c3.getProducts().addAll(Arrays.asList(p10,p11));
 		
-		repoAuxCategory.saveAll(Arrays.asList(c1,c2,c3));
+		
+		repoAuxCategory.saveAll(Arrays.asList(c1,c2,c3,c4,c5,c6,c7,c8,c9,c10));
 		
 		p1.getCategories().add(c1);
 		p2.getCategories().add(c1);
@@ -95,8 +110,12 @@ public class Virtualstorecourse1Application implements CommandLineRunner{
 		p7.getCategories().add(c3);
 		p8.getCategories().add(c2);
 		p8.getCategories().add(c1);
+		p9.getCategories().add(c8);
+		p10.getCategories().add(c10);
+		p11.getCategories().add(c10);
+		p12.getCategories().add(c8);
 				
-		repoAuxProduct.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8));
+		repoAuxProduct.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12));
 		
 		Province pro1=new Province(null,"Ghuozou");
 		Province pro2=new Province(null, "Zitzang");

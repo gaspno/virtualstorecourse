@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.projnetwork.entities.Category;
@@ -35,7 +38,8 @@ public class CategoryService {
 	}
 	public Category update(Category obj) {
 		
-		findById(obj.getId());
+		Category newe=findById(obj.getId());
+		update(newe,obj);
 		return repositoryCategory.save(obj);
 	}
 	public void deleteById(Integer id) {
@@ -48,6 +52,18 @@ public class CategoryService {
 		throw new DataIntegrityException("Categoria não pode ser excluida pois possui produtos vincualdos a ela");
 	}
 		
+	}
+	public Page<CategoryDTO> findforPage(Integer page,Integer lines,String orderBy,String orderClassification){
+		
+		PageRequest pagerequest=PageRequest.of(page, lines,Direction.valueOf(orderClassification),orderBy);
+		return repositoryCategory.findAll(pagerequest).map(x->new CategoryDTO(x));
+	}
+	
+	public Category categoryFromDTO(CategoryDTO dto) {
+		return new  Category(dto.getId(),dto.getName());
+	}
+	private void update(Category newe, Category obj) {
+		newe.setName(obj.getName());
 	}
 
 }

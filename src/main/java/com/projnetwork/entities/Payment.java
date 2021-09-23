@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.projnetwork.entities.enums.PaymentStatus;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -15,6 +16,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Payment implements Serializable{
 	
 	/**
@@ -43,7 +45,7 @@ public abstract class Payment implements Serializable{
 	public Payment(Integer id, PaymentStatus status, Order order) {
 		super();
 		Id = id;
-		this.status = status.getCode();
+		this.status =(status==null) ?null : status.getCode();
 		this.order = order;
 	}
 

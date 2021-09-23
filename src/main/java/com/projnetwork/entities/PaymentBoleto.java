@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.projnetwork.entities.enums.PaymentStatus;
 
 @Entity
+@JsonTypeName("pagamentoComBoleto")
 public class PaymentBoleto extends Payment{
 	
 	/**

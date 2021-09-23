@@ -2,9 +2,11 @@ package com.projnetwork.entities;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.projnetwork.entities.enums.PaymentStatus;
 
 @Entity
+@JsonTypeName("pagamentoComCartao")
 public class PaymentCreditCard extends Payment{
 	
 	/**
